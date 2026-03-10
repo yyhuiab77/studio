@@ -6,7 +6,6 @@ An intelligent command center for managing vertical transport assets like elevat
 
 - **Command Center Dashboard:** Get a real-time overview of all assets, system uptime, and active high-priority incidents.
 - **Incident Management:** Track, view, and manage all reported incidents. Click on any incident to see detailed information.
-- **AI-Powered Analysis:** Leverage Genkit and Google's Gemini models to automatically summarize incident reports and suggest probable causes.
 - **Asset Inventory:** A complete list of all managed assets, their status, type, location, and maintenance schedule.
 - **Maintenance Scheduling:** View upcoming and in-progress maintenance tasks for all assets.
 - **User Management:** (For Managers) View all personnel, their roles, and current duty status.
@@ -21,7 +20,6 @@ This project is built with a modern, production-ready tech stack:
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/)
 - **UI Components:** [ShadCN UI](https://ui.shadcn.com/)
 - **Icons:** [Lucide React](https://lucide.dev/guide/packages/lucide-react)
-- **AI:** [Genkit](https://firebase.google.com/docs/genkit) with Google's Gemini models
 - **Charts:** [Recharts](https://recharts.org/)
 - **Tables:** [TanStack Table](https://tanstack.com/table/v8)
 - **Forms:** [React Hook Form](https://react-hook-form.com/)
@@ -42,14 +40,26 @@ To run the application locally, follow these steps:
 
     The application will be available at [http://localhost:9002](http://localhost:9002).
 
-## Genkit AI Flows
+## Deployment to GitHub Pages
 
-This project includes AI-powered flows using Genkit. To run the Genkit development server for testing and debugging flows:
+This repository is configured to automatically build and deploy to GitHub Pages.
 
-```bash
-npm run genkit:dev
-```
+### How it Works
 
-## Deployment
+A GitHub Actions workflow located in `.github/workflows/deploy.yml` is set up to run on every push to the `main` branch. It performs the following steps:
 
-This application is configured for easy deployment with [Firebase App Hosting](https://firebase.google.com/docs/app-hosting). The configuration is located in `apphosting.yaml`.
+1.  Installs all necessary dependencies.
+2.  Builds the Next.js application for static export (`next build`).
+3.  Deploys the contents of the generated `out` directory to the `gh-pages` branch.
+
+### Enabling Pages for Your Repository
+
+To see your live site, you need to enable GitHub Pages in your repository settings:
+
+1.  Navigate to your repository on GitHub.
+2.  Go to **Settings** > **Pages**.
+3.  Under "Build and deployment", select **Source** as **Deploy from a branch**.
+4.  Select the `gh-pages` branch as the source and `/ (root)` as the folder.
+5.  Click **Save**.
+
+It may take a few minutes for your site to become available at `https://<your-username>.github.io/lift-dashboard/`.
