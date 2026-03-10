@@ -4,6 +4,7 @@ import * as React from "react";
 import {
   ArrowUpDown,
   ChevronDown,
+  MoreHorizontal,
   Plus,
 } from "lucide-react";
 import {
@@ -25,6 +26,7 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -40,6 +42,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import type { Incident, Asset, User } from "@/lib/types";
 import { format } from "date-fns";
+import { IncidentForm } from "./incident-form";
 
 const statusVariantMap: Record<Incident["status"], "default" | "secondary" | "destructive" | "outline"> = {
   "Pending": "default",
@@ -55,6 +58,11 @@ const priorityVariantMap: Record<Incident["priority"], "default" | "secondary" |
   "Critical": "destructive",
 };
 
+type IncidentData = Incident & {
+    assetName: string;
+    reportedByName: string;
+}
+
 export function IncidentTable({
   incidents,
   assets,
@@ -69,6 +77,19 @@ export function IncidentTable({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  
+  const [isFormOpen, setIsFormOpen] = React.useState(false);
+  const [selectedIncident, setSelectedIncident] = React.useState<Incident | undefined>(undefined);
+
+  const handleAddNew = () => {
+    setSelectedIncident(undefined);
+    setIsFormOpen(true);
+  };
+
+  const handleEdit = (incident: Incident) => {
+    setSelectedIncident(incident);
+    setIsFormOpen(true);
+  };
 
   const data = React.useMemo(() => incidents.map(incident => ({
     ...incident,
@@ -76,7 +97,7 @@ export function IncidentTable({
     reportedByName: users.find(u => u.id === incident.reportedBy)?.name || incident.reportedBy,
   })), [incidents, assets, users]);
 
-  const columns: ColumnDef<typeof data[0]>[] = [
+  const columns: ColumnDef<IncidentData>[] = [
     {
       accessorKey: "title",
       header: "Incident",
@@ -126,6 +147,34 @@ export function IncidentTable({
       },
       cell: ({ row }) => <div>{format(new Date(row.getValue("reportedAt")), 'PPp')}</div>,
     },
+    {
+        id: "actions",
+        cell: ({ row }) => {
+          const incident = row.original;
+   
+          return (
+            <div className="text-right">
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="h-8 w-8 p-0">
+                        <span className="sr-only">Open menu</span>
+                        <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={() => router.push(`/incidents/${incident.id}`)}>
+                            View Details
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleEdit(incident)}>
+                            Edit Incident
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            </div>
+          );
+        },
+        enableHiding: false,
+      },
   ];
 
   const table = useReactTable({
@@ -185,7 +234,7 @@ export function IncidentTable({
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button>
+          <Button onClick={handleAddNew}>
             <Plus className="mr-2 h-4 w-4" />
             Log Incident
           </Button>
@@ -216,8 +265,6 @@ export function IncidentTable({
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
-                    onClick={() => router.push(`/incidents/${row.original.id}`)}
-                    className="cursor-pointer"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
@@ -266,6 +313,13 @@ export function IncidentTable({
             </Button>
           </div>
         </div>
+        <IncidentForm
+            isOpen={isFormOpen}
+            onOpenChange={setIsFormOpen}
+            incident={selectedIncident}
+            assets={assets}
+            users={users}
+        />
       </CardContent>
     </Card>
   );
