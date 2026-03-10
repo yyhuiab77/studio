@@ -1,3 +1,28 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "user1",
+      "description": "User avatar",
+      "imageUrl": "https://picsum.photos/seed/user1/100/100",
+      "imageHint": "person portrait"
+    },
+    {
+      "id": "user2",
+      "description": "User avatar",
+      "imageUrl": "https://picsum.photos/seed/user2/100/100",
+      "imageHint": "person portrait"
+    },
+    {
+      "id": "user3",
+      "description": "User avatar",
+      "imageUrl": "https://picsum.photos/seed/user3/100/100",
+      "imageHint": "person portrait"
+    },
+    {
+      "id": "user4",
+      "description": "User avatar",
+      "imageUrl": "https://picsum.photos/seed/user4/100/100",
+      "imageHint": "person portrait"
+    }
+  ]
 }
