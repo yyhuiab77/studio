@@ -8,6 +8,12 @@ import { format } from "date-fns";
 import type { Incident } from "@/lib/types";
 import { Building, User, Calendar, Tag, ShieldAlert } from "lucide-react";
 
+export async function generateStaticParams() {
+  return incidents.map((incident) => ({
+    id: incident.id,
+  }));
+}
+
 const statusVariantMap: Record<Incident["status"], "default" | "secondary" | "destructive" | "outline"> = {
   "Pending": "default",
   "In Progress": "outline",
