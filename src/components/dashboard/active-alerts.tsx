@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -34,6 +37,7 @@ export function ActiveAlerts({
   incidents: Incident[];
   assets: Asset[];
 }) {
+  const router = useRouter();
   const activeIncidents = incidents
     .filter((i) => ["Pending", "In Progress"].includes(i.status) && ["High", "Critical"].includes(i.priority))
     .sort((a, b) => new Date(b.reportedAt).getTime() - new Date(a.reportedAt).getTime())
@@ -72,7 +76,7 @@ export function ActiveAlerts({
           <TableBody>
             {activeIncidents.length > 0 ? (
               activeIncidents.map((incident) => (
-                <TableRow key={incident.id} className="cursor-pointer" onClick={() => window.location.href=`/incidents/${incident.id}`}>
+                <TableRow key={incident.id} className="cursor-pointer" onClick={() => router.push(`/incidents/${incident.id}`)}>
                   <TableCell>
                     <div className="font-medium">{incident.title}</div>
                     <div className="hidden text-sm text-muted-foreground md:inline">
