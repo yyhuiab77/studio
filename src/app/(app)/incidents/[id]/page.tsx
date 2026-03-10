@@ -7,7 +7,6 @@ import { Separator } from "@/components/ui/separator";
 import { format } from "date-fns";
 import type { Incident } from "@/lib/types";
 import { Building, User, Calendar, Tag, ShieldAlert } from "lucide-react";
-import { AiAnalysis } from "@/components/incidents/ai-analysis";
 
 const statusVariantMap: Record<Incident["status"], "default" | "secondary" | "destructive" | "outline"> = {
   "Pending": "default",
@@ -61,7 +60,6 @@ export default function IncidentDetailPage({ params }: { params: { id: string } 
               )}
             </CardContent>
           </Card>
-          <AiAnalysis incident={incident} />
         </div>
 
         <div className="lg:col-span-1">
