@@ -2,10 +2,10 @@
 
 import * as React from "react";
 import {
-  CaretSortIcon,
-  ChevronDownIcon,
-  PlusIcon,
-} from "@radix-ui/react-icons";
+  ArrowUpDown,
+  ChevronDown,
+  Plus,
+} from "lucide-react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -120,7 +120,7 @@ export function IncidentTable({
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Reported
-            <CaretSortIcon className="ml-2 h-4 w-4" />
+            <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );
       },
@@ -162,7 +162,7 @@ export function IncidentTable({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">
-                Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
+                Columns <ChevronDown className="ml-2 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -186,7 +186,7 @@ export function IncidentTable({
             </DropdownMenuContent>
           </DropdownMenu>
           <Button>
-            <PlusIcon className="mr-2 h-4 w-4" />
+            <Plus className="mr-2 h-4 w-4" />
             Log Incident
           </Button>
         </div>
