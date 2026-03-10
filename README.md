@@ -62,4 +62,6 @@ To see your live site, you need to enable GitHub Pages in your repository settin
 4.  Select the `gh-pages` branch as the source and `/ (root)` as the folder.
 5.  Click **Save**.
 
+**Note:** The `gh-pages` branch is created automatically when you push to `main`. If you don't see it, push a change to your `main` branch to trigger the deployment workflow. It may take a minute for the branch to appear after the workflow completes.
+
 It may take a few minutes for your site to become available at `https://<your-username>.github.io/lift-dashboard/`.
