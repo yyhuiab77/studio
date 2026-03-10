@@ -21,6 +21,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Update base path for GitHub Pages
+        run: |
+          repo_name=$(echo $GITHUB_REPOSITORY | cut -d'/' -f2)
+          sed -i "s|const repoName = '.*';|const repoName = '$repo_name';|" next.config.ts
+          echo "Using repository name for basePath: $repo_name"
+          cat next.config.ts
+
       - name: Build
         run: npm run build
 

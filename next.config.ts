@@ -2,9 +2,8 @@ import type {NextConfig} from 'next';
 
 const isProd = process.env.NODE_ENV === 'production'
 
-// IMPORTANT: Before deploying to GitHub Pages, you should replace 'lift-dashboard'
-// with the name of your GitHub repository if it is different.
-const repoName = 'lift-dashboard'; 
+// This value will be replaced by the GitHub Actions workflow during deployment.
+const repoName = 'placeholder-repo-name'; 
 
 const nextConfig: NextConfig = {
   /**

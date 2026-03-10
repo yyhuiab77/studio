@@ -48,20 +48,22 @@ This repository is configured to automatically build and deploy to GitHub Pages.
 
 A GitHub Actions workflow located in `.github/workflows/deploy.yml` is set up to run on every push to the `main` branch. It performs the following steps:
 
-1.  Installs all necessary dependencies.
-2.  Builds the Next.js application for static export (`next build`).
-3.  Deploys the contents of the generated `out` directory to the `gh-pages` branch.
+1.  Dynamically configures the application's base path using your repository's name.
+2.  Installs all necessary dependencies.
+3.  Builds the Next.js application for static export (`next build`).
+4.  Deploys the contents of the generated `out` directory to a special `gh-pages` branch.
 
 ### Enabling Pages for Your Repository
 
-To see your live site, you need to enable GitHub Pages in your repository settings:
+To see your live site, you only need to enable GitHub Pages in your repository settings one time:
 
-1.  Navigate to your repository on GitHub.
-2.  Go to **Settings** > **Pages**.
-3.  Under "Build and deployment", select **Source** as **Deploy from a branch**.
-4.  Select the `gh-pages` branch as the source and `/ (root)` as the folder.
-5.  Click **Save**.
+1.  **Push a change to `main`**: First, make sure you have pushed at least one commit to the `main` branch to trigger the deployment workflow.
+2.  **Check the workflow status**: Go to the "Actions" tab in your GitHub repository. Wait for the workflow run (named "Deploy to GitHub Pages") to complete successfully. A green checkmark indicates success. If you see a red X, click on the workflow to inspect the logs and see what went wrong.
+3.  **Configure GitHub Pages**:
+    *   Navigate to your repository on GitHub.
+    *   Go to **Settings** > **Pages**.
+    *   Under "Build and deployment", for **Source**, select **Deploy from a branch**.
+    *   Select the `gh-pages` branch as the source and `/ (root)` as the folder. If you don't see the `gh-pages` branch, it means the workflow has not completed successfully yet.
+    *   Click **Save**.
 
-**Note:** The `gh-pages` branch is created automatically when you push to `main`. If you don't see it, push a change to your `main` branch to trigger the deployment workflow. It may take a minute for the branch to appear after the workflow completes.
-
-It may take a few minutes for your site to become available at `https://<your-username>.github.io/lift-dashboard/`.
+It may take a few minutes for your site to become available at `https://<your-username>.github.io/<your-repository-name>/`. After this one-time setup, every future push to `main` will automatically update your live site.
